@@ -1,0 +1,11 @@
+
+# create a folder for calculations
+# sample the data (1 of each type)
+# create different folders for each calculation
+# in each folder, create xyz file with samples molecule
+# in each folder, create .inp file for ORCA
+  # basis set cc-pVTZ
+
+# bash script that finds each .inp file and schedule an ORCA slurm job
+
+# find all of the output files and connect them into "data" and "labels"

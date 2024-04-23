@@ -17,7 +17,7 @@ def sample_data(dataset_dir, no_batches):
     working_dir = os.getcwd()
 
     # sample data for each datatype
-    for datatype_path in enumerate(datatypes_paths):
+    for datatype_path in datatypes_paths:
 
         # go into the folder containing certain data type and list all files inside
         os.chdir(datatype_path)

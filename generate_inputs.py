@@ -69,5 +69,6 @@ if __name__ == "__main__":
     parser.add_argument('output_dir')
     parser.add_argument('no_batches')
     args = parser.parse_args()
+    print(args.dataset_dir)
     generate_inputs(args.dataset_dir, args.output_dir, args.no_batches)
     print("finished generating inputs")

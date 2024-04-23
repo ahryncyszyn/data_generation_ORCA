@@ -42,7 +42,7 @@ def sample_data(dataset_dir, no_batches):
         
         # sample random molecules (indices)
         num_dataset_molecules = len(coords_dataset_1type)
-        sampled_indices = random.sample(range(num_dataset_molecules), no_batches)
+        sampled_indices = random.sample(range(num_dataset_molecules), int(no_batches))
 
         # save the data of sampled molecules
         coords_sampled = [coords_dataset_1type[i] for i in sampled_indices]

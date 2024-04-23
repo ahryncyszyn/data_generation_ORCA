@@ -49,8 +49,8 @@ def ORCA_input_file(elements, coords, charge):
         f.write("nprocs 8\n")
         f.write("end\n\n")
         f.write("%maxcore 22500\n")
-        f.write("%cpcm")
-        f.write("epsilon 80.0") # dielectric constant
+        f.write("%cpcm") 
+        f.write("epsilon 80.4") # dielectric constant
         f.write("refrac 1.33") # refractive index
         f.write("rsolv 1.3") # solvent probe radius
         f.write("end")

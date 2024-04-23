@@ -1,11 +1,12 @@
+import argparse
 import os
 
 from sample_data import sample_data
 from xyz_utils import exportXYZ_with_charge
 
-def generate_inputs(xyz_files_dir, output_dir, no_batches):
+def generate_inputs(dataset_dir, output_dir, no_batches):
     """ Samples the data from the dataset and creates ORCA input file for each one of them.
-    xyz_files_dir (str): path to the dataset
+    dataset_dir (str): path to the dataset
     output_dir (str): path where to store the results
     no_batches (int): number of batches (molecules per each datatype) to sample
     """
@@ -16,7 +17,7 @@ def generate_inputs(xyz_files_dir, output_dir, no_batches):
 
     # sample the data
     # data_points -> list[(coords, atoms, charge, info)]
-    elements_all, coords_all, charges_all, names_all = sample_data(xyz_files_dir, no_batches)
+    elements_all, coords_all, charges_all, names_all = sample_data(dataset_dir, no_batches)
     assert len(coords_all) == len(elements_all) == len(charges_all)
     
     # save sampled data
@@ -62,4 +63,11 @@ def ORCA_input_file(elements, coords, charge):
             f.write(f"{element.capitalize()} {coord[0]} {coord[1]} {coord[2]}\n")
 
 
-    
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('dataset_dir')
+    parser.add_argument('output_dir')
+    parser.add_argument('no_batches')
+    args = parser.parse_args()
+    generate_inputs(args.dataset_dir, args.output_dir, args.no_batches)
+    print("finished generating inputs")

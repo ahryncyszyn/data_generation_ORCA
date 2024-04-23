@@ -11,6 +11,7 @@ def generate_inputs(dataset_dir, output_dir, no_batches):
     no_batches (int): number of batches (molecules per each datatype) to sample
     """
 
+    print(f"variables for the generation are: {dataset_dir}, {output_dir}, {no_batches}")
     # create the output directory if it doesn't exist yet
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -69,6 +70,5 @@ if __name__ == "__main__":
     parser.add_argument('output_dir')
     parser.add_argument('no_batches')
     args = parser.parse_args()
-    print(args.dataset_dir)
     generate_inputs(args.dataset_dir, args.output_dir, args.no_batches)
     print("finished generating inputs")

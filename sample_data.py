@@ -4,12 +4,12 @@ import os
 import re
 from xyz_utils import readXYZs, find_mol_charge
 
-def sample_data(xyz_files_dir, no_batches):
+def sample_data(dataset_dir, no_batches):
     
     # list all of the datatypes in dataset directory
-    all_items = os.listdir(xyz_files_dir)
-    datatypes_paths = [os.path.join(xyz_files_dir, item) for item in all_items 
-                      if os.path.isdir(os.path.join(xyz_files_dir, item))]
+    all_items = os.listdir(dataset_dir)
+    datatypes_paths = [os.path.join(dataset_dir, item) for item in all_items 
+                      if os.path.isdir(os.path.join(dataset_dir, item))]
     print(f"Found datatypes are {datatypes_paths}")
 
     # initialize variables for the data sampling

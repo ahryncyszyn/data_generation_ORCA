@@ -58,7 +58,7 @@ def ORCA_input_file(elements, coords, charge):
         f.write("end\n\n")
 
         #multiplicity set to 2, as all molecules are radicals
-        f.write(f"* xyz {charge} 2")
+        f.write(f"* xyz {charge} 2\n")
 
         for element, coord in zip(elements, coords):
             f.write(f"{element.capitalize()} {coord[0]} {coord[1]} {coord[2]}\n")

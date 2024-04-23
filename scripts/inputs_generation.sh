@@ -10,4 +10,4 @@ dataset_dir=path
 output_dir=path
 no_batches=1 
 
-python generate_inputs "$dataset_dir" "$output_dir" $no_batches
+python generate_inputs.py "$dataset_dir" "$output_dir" $no_batches

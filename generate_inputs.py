@@ -34,7 +34,7 @@ def generate_inputs(dataset_dir, output_dir, no_batches):
         os.chdir(temp_dir)
 
         # create data file with xyz coords
-        exportXYZ_with_charge(elements, coords, charge, "molecule.inp")
+        exportXYZ_with_charge(elements, coords, charge, "data.xyz")
 
         # create ORCA input
         ORCA_input_file(elements, coords, charge)

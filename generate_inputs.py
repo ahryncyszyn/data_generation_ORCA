@@ -38,6 +38,9 @@ def generate_inputs(dataset_dir, output_dir, no_batches):
 
         # create ORCA input
         ORCA_input_file(elements, coords, charge)
+
+        # create a batch script
+        batch_script(i)
         
     print(f"Input ORCA files have been generated for {len(coords_all)} molecules")
 
@@ -63,6 +66,29 @@ def ORCA_input_file(elements, coords, charge):
         for element, coord in zip(elements, coords):
             f.write(f"{element.capitalize()} {coord[0]} {coord[1]} {coord[2]}\n")
 
+def batch_script(i):
+    with open("run", "w") as f:
+        f.write(f"""#!/bin/bash
+#SBATCH --partition=large
+#SBATCH --time=2-00:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=76
+#SBATCH --output=orca%j.out
+#SBATCH --error=orca%j.error
+#SBATCH --job-name=orca{i}
+
+module purge
+module load orca/5.0.4
+
+cd $SLURM_SUBMIT_DIR
+cp test.inp $TMP
+cd $TMP
+
+nohup $\u007bORCA_PATH\u007d/orca test.inp > $\u007bSLURM_SUBMIT_DIR\u007d/test.out
+
+cp * $SLURM_SUBMIT_DIR
+
+exit 0""")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -46,11 +46,11 @@ def generate_inputs(dataset_dir, output_dir, no_batches):
 def ORCA_input_file(elements, coords, charge):
     
     with open("molecule.inp", "w") as f:
-        f.write("! DLPNO-CCSD(T) cc-pVTZ cc-pVTZ/C TIGHTSCF\n\n")
+        f.write("! DLPNO-CCSD(T) def2-TZVP def2-TZVP/C TightPNO TightSCF\n\n")
         f.write("%pal\n")
-        f.write("nprocs 8\n")
+        f.write("nprocs 76\n")
         f.write("end\n\n")
-        f.write("%maxcore 22500\n\n")
+        f.write("%maxcore 25000\n\n")
         f.write("%cpcm\n") 
         f.write("epsilon 80.4\n") # dielectric constant
         f.write("refrac 1.33\n") # refractive index

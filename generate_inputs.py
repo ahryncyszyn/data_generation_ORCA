@@ -62,9 +62,9 @@ def ORCA_input_file(elements, coords, charge):
 
         #multiplicity set to 2, as all molecules are radicals
         f.write(f"* xyz {charge} 2\n")
-
         for element, coord in zip(elements, coords):
             f.write(f"{element.capitalize()} {coord[0]} {coord[1]} {coord[2]}\n")
+        f.write("*")
 
 def batch_script(i):
     with open("run", "w") as f:

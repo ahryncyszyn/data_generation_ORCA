@@ -81,10 +81,10 @@ module purge
 module load orca/5.0.4
 
 cd $SLURM_SUBMIT_DIR
-cp test.inp $TMP
+cp molecule.inp $TMP
 cd $TMP
 
-nohup $\u007bORCA_PATH\u007d/orca test.inp > $\u007bSLURM_SUBMIT_DIR\u007d/test.out
+nohup $\u007bORCA_PATH\u007d/orca molecule.inp > $\u007bSLURM_SUBMIT_DIR\u007d/molecule.out
 
 cp * $SLURM_SUBMIT_DIR
 

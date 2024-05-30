@@ -14,7 +14,7 @@ def extract_results(calculations_path, results_path):
     """
 
     # find paths to all of the calculations
-    mol_paths = [os.path.join(calculations_path, path) for path in os.listdir()]
+    mol_paths = [os.path.join(calculations_path, path) for path in os.listdir(calculations_path)]
 
     # create results files
     data_file = open(os.path.join(results_path, 'data_molecules.xyz'), 'a')
@@ -43,6 +43,7 @@ def extract_results(calculations_path, results_path):
         with open('data.xyz') as f:
             for line in f:
                 data_file.write(line)
+        data_file.write('\n')
 
     data_file.close()
         

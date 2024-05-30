@@ -1,43 +1,28 @@
 #!/bin/bash
 
-path="/home/kit/iti/mt4181/test"
+# define the path to the parent directory
+parent_path="/hkfs/work/workspace/scratch/mt4181-orca/inputs"
 
-if [ ! -d "$path" ]; then
+# check if the parent directory exists
+if [ ! -d "$parent_path" ]; then
     echo "Specified path does not exist!"
     exit 1
 fi
 
-find "$path" -type d | while read -r directory; do
-    
-    cd "$directory" || continue
+# find each subdirectory and submit the job using sbatch
+find "$parent_path" -mindepth 1 -type d | while read -r subdirectory; do
 
-    
-    if [ -f "molecule.inp" ]; then
+    # Check if the "run" file exists in the subdirectory
+    if [ -f "$subdirectory/run" ]; then
+        echo "Submitting job for $subdirectory"
         
-        sbatch <<EOF
-#!/bin/bash
-#SBATCH --partition=single
-#SBATCH --time=3-00:00:00
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-#SBATCH --mem=180000
-#SBATCH --output=orca%j.out
-#SBATCH --error=orca%j.error
-#SBATCH --job-name=orca
+        # Change to the subdirectory and submit the job
+        cd "$subdirectory" || continue
 
-module purge
-module load orca/5.0.4
-
-cd $SLURM_SUBMIT_DIR
-cp molecule.inp $TMP
-cd $TMP
-
-nohup ${ORCA_PATH}/orca molecule.inp > ${SLURM_SUBMIT_DIR}/molecule.out
-
-cp * $SLURM_SUBMIT_DIR
-
-exit 0
-EOF   
-
+        # Submit the job using sbatch
+        sbatch run
+    else
+        echo "No 'run' file in $subdirectory, skipping..."
     fi
+
 done

@@ -36,7 +36,7 @@ def extract_results(calculations_path, results_path):
             all_energies = np.load(energies_file)
         else:
             all_energies = np.array([])
-        energies = np.concatenate((all_energies, np.array(energy)))
+        energies = np.concatenate((all_energies, np.array([energy])))
         np.save(energies_file, energies)
 
         # append the xyz data

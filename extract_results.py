@@ -1,20 +1,22 @@
 
 import numpy as np
 import argparse
+import shutil
 import os
 
-def extract_results(calculations_path, results_path):
+def extract_results(data_path, results_path, storage_path):
     """ Extracts the total energy from each ".out" ORCA file. Creates two files:
     "data.xyz" - containing all of the molecules in xyz format
     "labels.npy" - containing all of the corresponding energies in the same order
 
-    calculations_path (str): path to the folder created by "inputs_generation.py", 
+    data_path (str): path to the folder created by "inputs_generation.py", 
                          contains all calculations and their results
     results_path (str): path where the results will be saved
+    storage_path (str): path where the calculations data will be moved at the end and stored
     """
 
     # find paths to all of the calculations
-    mol_paths = [os.path.join(calculations_path, path) for path in os.listdir(calculations_path)]
+    mol_paths = [os.path.join(data_path, path) for path in os.listdir(data_path)]
 
     # create results files
     data_file = open(os.path.join(results_path, 'data_molecules.xyz'), 'a')
@@ -44,6 +46,7 @@ def extract_results(calculations_path, results_path):
             for line in f:
                 data_file.write(line)
         data_file.write('\n')
+        shutil.move(mol_path, storage_path)
 
     data_file.close()
         

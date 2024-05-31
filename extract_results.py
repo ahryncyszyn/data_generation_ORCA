@@ -52,10 +52,11 @@ def extract_results(data_path, results_path, storage_path):
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('calculations_path')
+    parser.add_argument('data_path')
     parser.add_argument('results_path')
+    parser.add_argument('storage_path')
     args = parser.parse_args()
 
-    extract_results(args.calculations_path, args.results_path)
+    extract_results(args.data_path, args.results_path, args.storage_path)
     print("finished extracting data")
 

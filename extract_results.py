@@ -6,34 +6,43 @@ import os
 
 def extract_results(data_path, results_path, storage_path):
     """ Extracts the total energy from each ".out" ORCA file. Creates two files:
-    "data.xyz" - containing all of the molecules in xyz format
-    "labels.npy" - containing all of the corresponding energies in the same order
+    "data_molecules.xyz" - containing all of the molecules in xyz format
+    "final_energies.npy" - containing all of the corresponding energies in the same order
 
     data_path (str): path to the folder created by "inputs_generation.py", 
-                         contains all calculations and their results
+                    contains all calculations and their results in separate folders
     results_path (str): path where the results will be saved
-    storage_path (str): path where the calculations data will be moved at the end and stored
+    storage_path (str): path where the calculations data will be moved at the end for storage
     """
+    # for units conversion Hartree --> eV
+    HToeV = 27.211399
 
     # find paths to all of the calculations
     mol_paths = [os.path.join(data_path, path) for path in os.listdir(data_path)]
 
-    # create results files
+    # create results files or open existing ones
     data_file = open(os.path.join(results_path, 'data_molecules.xyz'), 'a')
-    energies_file = os.path.join(results_path, 'labels.npy')
+    energies_file = os.path.join(results_path, 'final_energies.npy')
 
     # append all results to results files
     for mol_path in mol_paths:
         os.chdir(mol_path)
 
-        # read out and append the energy value
+        # read out the energy value and convert it to eV
         with open('molecule.out') as f:
+            energy = None
             for line in f:
                 words = line.strip().split()
                 if len(words) == 5 and words[0:4] == ['FINAL', 'SINGLE', 'POINT', 'ENERGY']:
-                    energy = float(words[4])
+                    energy = float(words[4]) * HToeV
                     break
 
+        # skip this molecule if the calculation did not converge        
+        if energy is None:
+            print(f"missing result of calculation {mol_path}")
+            continue
+
+        # append the energy to results
         if os.path.exists(energies_file):
             all_energies = np.load(energies_file)
         else:
